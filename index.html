@@ -1,538 +1,1479 @@
-<!DOCTYPE html>
+ <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Admin - Control</title>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <style>
-    :root { --primary: #6366f1; --bg: #f3f4f6; --surface: #ffffff; --text: #111827; --text-light: #6b7280; --danger: #ef4444; --success: #10b981; --warning: #f59e0b; }
-    * { margin:0; padding:0; box-sizing:border-box; font-family:'Inter', sans-serif; }
-    body { background-color: var(--bg); color: var(--text); display: flex; min-height: 100vh; }
-    .sidebar { width: 260px; background: var(--surface); height: 100vh; position: fixed; left: 0; top: 0; border-right: 1px solid #e5e7eb; z-index: 1000; transition: transform 0.3s; }
-    .brand { padding: 20px; border-bottom: 1px solid #f3f4f6; display: flex; align-items: center; gap: 10px; font-size: 1.25rem; font-weight: 700; color: var(--primary); }
-    .menu { padding: 15px 0; }
-    .menu-item { display: flex; align-items: center; gap: 12px; padding: 12px 25px; color: var(--text-light); text-decoration: none; font-weight: 500; cursor: pointer; transition: 0.2s; }
-    .menu-item:hover, .menu-item.active { background: #eef2ff; color: var(--primary); border-right: 3px solid var(--primary); }
-    .main-content { margin-left: 260px; width: calc(100% - 260px); padding: 30px; transition: margin 0.3s, width 0.3s; }
-    .mob-header { display: none; justify-content: space-between; align-items: center; background: var(--surface); padding: 15px 20px; border-radius: 10px; margin-bottom: 20px; box-shadow: 0 1px 2px rgba(0,0,0,0.05); }
-    .page { display: none; animation: fadeIn 0.3s; }
-    .page.active { display: block; }
-    @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-    .card { background: var(--surface); padding: 25px; border-radius: 12px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); margin-bottom: 25px; }
-    .card-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; padding-bottom: 15px; border-bottom: 1px solid #f3f4f6; }
-    .card-title { font-size: 1.1rem; font-weight: 600; }
-    .stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 20px; margin-bottom: 30px; }
-    .stat-item { background: var(--surface); padding: 25px; border-radius: 12px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
-    .stat-item h3 { font-size: 0.9rem; color: var(--text-light); text-transform: uppercase; margin-bottom: 5px; }
-    .stat-item h1 { font-size: 2rem; font-weight: 700; color: var(--text); }
-    .table-container { overflow-x: auto; }
-    table { width: 100%; border-collapse: collapse; min-width: 700px; }
-    th { text-align: left; padding: 15px; background: #f9fafb; color: var(--text-light); font-size: 0.85rem; font-weight: 600; text-transform: uppercase; }
-    td { padding: 15px; border-bottom: 1px solid #f3f4f6; font-size: 0.95rem; vertical-align: middle; }
-    .user-cell { display: flex; align-items: center; gap: 10px; }
-    .user-img { width: 35px; height: 35px; border-radius: 50%; object-fit: cover; border: 1px solid #e5e7eb; }
-    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 15px; }
-    .form-group { margin-bottom: 15px; }
-    .form-group label { display: block; margin-bottom: 6px; font-weight: 500; font-size: 0.9rem; color: var(--text-light); }
-    input, select { width: 100%; padding: 10px 12px; border: 1px solid #d1d5db; border-radius: 8px; outline: none; transition: 0.2s; background: #fff; }
-    input:focus, select:focus { border-color: var(--primary); box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1); }
-    .btn { padding: 8px 16px; border: none; border-radius: 6px; font-weight: 500; cursor: pointer; transition: 0.2s; font-size: 0.9rem; color: white; }
-    .btn-p { background: var(--primary); } .btn-s { background: var(--success); } .btn-d { background: var(--danger); } .btn-w { background: var(--warning); }
-    .btn-sm { padding: 5px 10px; font-size: 0.8rem; margin-right: 5px; }
-    .overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 900; display: none; }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title❖𝐈𝐧𝐜𝐨𝐦𝐞 𝐓𝐚𝐥𝐞𝐧𝐭❖></title>
     
-    /* Danger Zone Style */
-    .danger-zone { margin-top: 40px; border: 2px solid #fecaca; padding: 25px; border-radius: 12px; background: #fef2f2; }
-    .danger-zone h3 { color: var(--danger); margin-bottom: 10px; display: flex; align-items: center; gap: 10px; }
-    .danger-zone p { margin-bottom: 20px; color: #7f1d1d; font-size: 0.95rem; line-height: 1.5; }
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <script src="https://sad.adsgram.ai/js/sad.min.js"></script>
 
-    @media (max-width: 768px) { .sidebar { transform: translateX(-100%); } .sidebar.show { transform: translateX(0); } .main-content { margin-left: 0; width: 100%; } .mob-header { display: flex; } .overlay.show { display: block; } .form-row { grid-template-columns: 1fr; } }
-  </style>
+  
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
+    
+    <style>
+        /* CSS এর পুরো কোড ধাপ ৫-এ এখানে বসবে। আপাতত ফাঁকা রাখলাম। */
+      /* ==========================================
+   CSS: Professional Fintech Wallet Theme (Pro)
+========================================== */
+
+:root {
+    --font-family: 'Inter', sans-serif;
+    
+    /* Dark Theme (Deep Obsidian) */
+    --bg-dark: #0B0F19;
+    --surface-dark: #1E293B;
+    --surface-hover: #27354D;
+    --text-main-dark: #F8FAFC;
+    --text-muted-dark: #9CA3AF;
+    --border-dark: #334155;
+    
+    /* Accents (Trust Blue & Premium Gold) */
+    --primary: #3B82F6;
+    --primary-glow: rgba(59, 130, 246, 0.25);
+    --secondary: #F59E0B;
+    
+    /* Status Colors */
+    --success: #10B981;
+    --danger: #EF4444;
+    --warning: #F59E0B;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html, body { height: 100%; font-family: var(--font-family); -webkit-font-smoothing: antialiased; background: var(--bg-dark); color: var(--text-main-dark); }
+
+#app { max-width: 500px; margin: 0 auto; padding-bottom: 90px; }
+.page { display: none; padding: 16px; animation: fadeUp 0.3s ease-out; }
+.page.active { display: block; }
+
+@keyframes fadeUp {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* ==========================================
+   Loaders & Modals
+========================================== */
+#app-loader {
+    position: fixed; inset: 0; z-index: 9999;
+    display: grid; place-items: center;
+    background: var(--bg-dark); color: #fff;
+}
+#bootex-loader { text-align: center; }
+.loader-title { font-size: 1.5rem; font-weight: 800; margin-bottom: 5px; letter-spacing: -0.5px; }
+#loader-text { font-size: 0.9rem; color: var(--text-muted-dark); }
+#loader-line {
+    width: 150px; height: 4px; background: var(--border-dark);
+    margin: 15px auto; border-radius: 4px; overflow: hidden; position: relative;
+}
+#loader-line::after {
+    content: ''; position: absolute; left: -50%; width: 50%; height: 100%;
+    background: var(--primary); border-radius: 4px;
+    animation: slide 1.5s infinite ease-in-out;
+}
+@keyframes slide { to { left: 100%; } }
+.loader-hide { animation: loaderFade 0.4s forwards; }
+@keyframes loaderFade { to { opacity: 0; visibility: hidden; } }
+
+.popup-overlay {
+    position: fixed; inset: 0; background: rgba(0,0,0,0.7);
+    backdrop-filter: blur(5px); z-index: 10000; display: none; place-items: center;
+}
+.popup-content {
+    background: var(--surface-dark); width: 90%; max-width: 400px;
+    padding: 24px; border-radius: 20px; text-align: center;
+    border: 1px solid var(--border-dark); box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+    color: #fff; animation: scaleIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+@keyframes scaleIn { from { transform: scale(0.9); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+.popup-close-btn { margin-top: 15px; padding: 10px 20px; border-radius: 10px; font-weight: 600; cursor: pointer; transition: 0.2s; }
+
+/* ==========================================
+   Header & Badges
+========================================== */
+.profile-header {
+    margin: 16px; border-radius: 16px;
+    background: var(--surface-dark); border: 1px solid var(--border-dark);
+    padding: 16px; box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+}
+
+.status-badge {
+    padding: 4px 8px; border-radius: 6px; font-size: 0.7rem; font-weight: 700;
+    display: inline-flex; align-items: center; gap: 4px; text-transform: uppercase;
+}
+.status-badge.unverified { background: rgba(245, 158, 11, 0.15); color: var(--warning); border: 1px solid rgba(245, 158, 11, 0.3); transition: 0.2s; }
+.status-badge.unverified:active { transform: scale(0.95); }
+.status-badge.blocked { background: rgba(239, 68, 68, 0.15); color: var(--danger); border: 1px solid rgba(239, 68, 68, 0.3); }
+
+/* ==========================================
+   Hero Wallet Card
+========================================== */
+.hero-wallet-card {
+    background: linear-gradient(135deg, #1E3A8A, #2563EB);
+    border-radius: 20px; padding: 24px 20px; text-align: center;
+    color: #fff; box-shadow: 0 12px 24px var(--primary-glow);
+    margin-bottom: 24px; position: relative; overflow: hidden;
+}
+.hero-subtitle { font-size: 0.9rem; opacity: 0.8; margin-bottom: 8px; font-weight: 500; }
+.hero-balance { font-size: 2.5rem; font-weight: 800; letter-spacing: -1px; margin-bottom: 20px; }
+.currency-symbol { font-size: 1.5rem; vertical-align: super; opacity: 0.9; margin-right: 2px; }
+
+.quick-actions-row { display: flex; justify-content: center; gap: 25px; }
+.quick-btn {
+    background: transparent; border: none; color: #fff; cursor: pointer;
+    display: flex; flex-direction: column; align-items: center; gap: 8px; outline: none;
+}
+.quick-btn .icon-circle {
+    width: 48px; height: 48px; border-radius: 14px;
+    background: rgba(255,255,255,0.15); display: grid; place-items: center;
+    font-size: 1.2rem; transition: background 0.2s, transform 0.2s;
+}
+.quick-btn:active .icon-circle { background: rgba(255,255,255,0.25); transform: scale(0.95); }
+.quick-btn span { font-size: 0.8rem; font-weight: 600; }
+
+/* ==========================================
+   Stats Grid
+========================================== */
+.section-title { font-size: 1.1rem; font-weight: 700; margin-bottom: 12px; color: var(--text-main-dark); }
+.stats-grid-clean { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; margin-bottom: 24px; }
+.stat-box {
+    display: flex; align-items: center; gap: 12px; padding: 16px;
+    border-radius: 16px; background: var(--surface-dark); border: 1px solid var(--border-dark);
+}
+.stat-box i { font-size: 1.5rem; }
+.text-blue { color: #3B82F6; } .text-purple { color: #8B5CF6; } .text-green { color: #10B981; }
+.stat-info p { font-size: 0.75rem; font-weight: 600; color: var(--text-muted-dark); text-transform: uppercase; }
+.stat-info h4 { font-size: 1.1rem; font-weight: 700; margin-top: 2px; color: var(--text-main-dark); }
+
+/* ==========================================
+   Refer Premium Card (NEW)
+========================================== */
+.refer-premium-card {
+    background: linear-gradient(180deg, var(--surface-dark) 0%, #0f172a 100%);
+    border: 1px solid var(--border-dark); border-radius: 20px;
+    padding: 24px; text-align: center; box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+    position: relative; overflow: hidden;
+}
+.refer-premium-card::before {
+    content: ''; position: absolute; top: -50px; left: -50px; width: 150px; height: 150px;
+    background: radial-gradient(circle, rgba(59,130,246,0.2) 0%, transparent 70%); border-radius: 50%;
+}
+.refer-icon-box {
+    width: 60px; height: 60px; border-radius: 16px; background: rgba(59, 130, 246, 0.1);
+    color: var(--primary); font-size: 24px; display: grid; place-items: center; margin: 0 auto 15px;
+    border: 1px solid rgba(59, 130, 246, 0.3); box-shadow: 0 0 15px rgba(59, 130, 246, 0.2);
+}
+.refer-premium-card h3 { font-size: 1.2rem; font-weight: 800; margin-bottom: 8px; }
+.refer-reward-text { font-size: 0.95rem; color: var(--text-muted-dark); margin-bottom: 20px; }
+.refer-link-box { background: rgba(0,0,0,0.2); padding: 15px; border-radius: 12px; border: 1px solid var(--border-dark); }
+
+/* ==========================================
+   Tasks & Wallet Cards
+========================================== */
+.earning-transfer-card, .wallet-card {
+    background: var(--surface-dark); border: 1px solid var(--border-dark);
+    border-radius: 16px; padding: 16px; margin-bottom: 24px; text-align: center;
+}
+.et-header { display: flex; align-items: center; justify-content: center; gap: 8px; margin-bottom: 10px; font-weight: 600; }
+.et-balance { font-size: 2rem; font-weight: 800; color: var(--primary); margin-bottom: 4px; }
+.et-note { font-size: 0.8rem; color: var(--text-muted-dark); margin-bottom: 16px; }
+
+.task-container {
+    display: flex; align-items: center; gap: 12px; padding: 14px;
+    border-radius: 14px; background: var(--surface-dark); border: 1px solid var(--border-dark);
+    margin-bottom: 10px; transition: transform 0.2s;
+}
+.task-icon-img { width: 44px; height: 44px; border-radius: 10px; object-fit: cover; }
+.task-info { flex: 1; }
+.task-info h3 { font-size: 0.95rem; font-weight: 700; margin-bottom: 2px; }
+.task-info p { font-size: 0.8rem; color: var(--text-muted-dark); }
+
+/* ==========================================
+   Lists & Leaderboard
+========================================== */
+.clean-list { list-style: none; }
+.clean-list li {
+    display: flex; align-items: center; gap: 12px; padding: 14px;
+    border-radius: 14px; background: var(--surface-dark); border: 1px solid var(--border-dark);
+    margin-bottom: 10px;
+}
+.lb-rank { font-weight: 800; color: var(--primary); font-size: 1.1rem; width: 35px; text-align: center; }
+.lb-details { flex: 1; }
+.lb-details p { font-weight: 700; font-size: 0.95rem; }
+.lb-details small { font-size: 0.8rem; color: var(--text-muted-dark); }
+
+.tab-controls { display: flex; gap: 10px; margin-bottom: 16px; background: var(--surface-dark); padding: 5px; border-radius: 12px; border: 1px solid var(--border-dark); }
+.tab-btn {
+    flex: 1; padding: 10px; border: none; background: transparent; border-radius: 8px;
+    color: var(--text-muted-dark); font-weight: 600; font-size: 0.9rem; cursor: pointer; transition: 0.2s;
+}
+.tab-btn.active { background: var(--primary); color: #fff; box-shadow: 0 4px 10px rgba(59, 130, 246, 0.3); }
+
+/* ==========================================
+   Buttons & Forms
+========================================== */
+.action-btn {
+    padding: 12px 18px; border: none; border-radius: 10px;
+    background: var(--primary); color: #fff; font-weight: 700; cursor: pointer;
+    font-family: var(--font-family); transition: opacity 0.2s, transform 0.1s;
+}
+.action-btn:active { transform: scale(0.97); }
+.action-btn:disabled { background: var(--border-dark); cursor: not-allowed; color: #9CA3AF; transform: none; }
+.block-btn { width: 100%; display: block; }
+
+.clean-form label { display: block; font-size: 0.85rem; font-weight: 600; margin-bottom: 6px; color: var(--text-muted-dark); }
+.clean-form input, .clean-form select {
+    width: 100%; padding: 14px; border-radius: 12px; border: 1px solid var(--border-dark);
+    background: #0F172A; color: var(--text-main-dark); font-family: var(--font-family);
+    margin-bottom: 16px; font-size: 0.95rem; outline: none; transition: border-color 0.2s;
+}
+.clean-form input:focus, .clean-form select:focus { border-color: var(--primary); }
+
+/* ==========================================
+   Bottom Navigation
+========================================== */
+.bottom-nav-clean {
+    position: fixed; bottom: 0; left: 0; right: 0; max-width: 500px; margin: 0 auto;
+    display: grid; grid-template-columns: repeat(5, 1fr);
+    background: var(--surface-dark); border-top: 1px solid var(--border-dark);
+    padding: 10px 0 calc(10px + env(safe-area-inset-bottom)); z-index: 1000;
+}
+.nav-item {
+    background: transparent; border: none; display: flex; flex-direction: column;
+    align-items: center; gap: 4px; color: var(--text-muted-dark); cursor: pointer;
+    font-family: var(--font-family); outline: none;
+}
+.nav-item i { font-size: 1.2rem; transition: transform 0.2s; }
+.nav-item span { font-size: 0.7rem; font-weight: 600; }
+.nav-item.active { color: var(--primary); }
+.nav-item.active i { transform: translateY(-2px); }
+
+.center-fab .fab-inner {
+    width: 48px; height: 48px; border-radius: 50%;
+    background: var(--primary); color: #fff;
+    display: grid; place-items: center; font-size: 1.4rem;
+    transform: translateY(-15px); box-shadow: 0 4px 12px var(--primary-glow);
+    transition: transform 0.2s;
+}
+.center-fab:active .fab-inner { transform: translateY(-12px) scale(0.95); }
+
+      
+    </style>
+<link rel="me" href="https://draft.blogger.com/profile/14746413706643477919" />
+<meta name='google-adsense-platform-account' content='ca-host-pub-1556223355139109'/>
+<meta name='google-adsense-platform-domain' content='blogspot.com'/>
+
+<script type="text/javascript" language="javascript">
+  // Supply ads personalization default for EEA readers
+  // See https://www.blogger.com/go/adspersonalization
+  adsbygoogle = window.adsbygoogle || [];
+  if (typeof adsbygoogle.requestNonPersonalizedAds === 'undefined') {
+    adsbygoogle.requestNonPersonalizedAds = 1;
+  }
+</script>
+
 </head>
 <body>
 
-  <div class="overlay" onclick="toggleMenu()"></div>
-
-  <aside class="sidebar" id="sidebar">
-    <div class="brand"><i class="fas fa-shield-alt"></i> Admin Pro</div>
-    <div class="menu">
-      <div class="menu-item active" onclick="nav('dashboard', this)"><i class="fas fa-home"></i> Dashboard</div>
-      <div class="menu-item" onclick="nav('users', this)"><i class="fas fa-users"></i> Users</div>
-      <div class="menu-item" onclick="nav('tasks', this)"><i class="fas fa-tasks"></i> Tasks</div>
-      <div class="menu-item" onclick="nav('ads', this)"><i class="fas fa-ad"></i> Ads</div>
-      <div class="menu-item" onclick="nav('withdraw', this)"><i class="fas fa-wallet"></i> Withdrawals</div>
-      <div class="menu-item" onclick="nav('w-history', this)"><i class="fas fa-history"></i> History</div>
-      <div class="menu-item" onclick="nav('settings', this)"><i class="fas fa-cog"></i> Settings</div>
-    </div>
-  </aside>
-
-  <main class="main-content">
-    <div class="mob-header"><h3>Admin Panel</h3><i class="fas fa-bars" style="font-size: 1.5rem; cursor: pointer;" onclick="toggleMenu()"></i></div>
-
-    <div id="dashboard" class="page active">
-      <div class="stats">
-        <div class="stat-item"><h3>Total Users </h3><h1 id="stat-users" style="color:var(--success)">0</h1></div>
-        <div class="stat-item"><h3>Pending Requests</h3><h1 id="stat-pending" style="color:var(--warning)">0</h1></div>
-        <div class="stat-item"><h3>Total Paid</h3><h1 id="stat-paid" style="color:var(--success)">0</h1></div>
-         <div class="stat-item"><h3>Total Withdraw (Paid)</h3><h1 id="stat-total-withdrawn" style="color:var(--primary)">0.00</h1></div>
+    <div id="app-loader">
+      <div id="bootex-loader">
+        <div id="lottie-box"></div>
+        <div class="loader-title"❖𝐈𝐧𝐜𝐨𝐦𝐞 𝐓𝐚𝐥𝐞𝐧𝐭❖></div>
+        <p id="loader-text">Securing connection...</p>
+        <div id="loader-line"></div>
+      </div>
+      <div id="fallback-bounce" aria-hidden="true" style="display:none;">
+        <div class="boot-icon"><i class="fas fa-wallet"></i></div>
+        <div class="loader-title">𝐈𝐧𝐜𝐨𝐦𝐞</div>
+        <p class="hint">Getting things ready…</p>
       </div>
     </div>
 
-    <div id="users" class="page">
-      <div class="card">
-        <div class="card-head"><span class="card-title">User List</span>
-          <div>
-            <input type="text" id="search-box" placeholder="Search..." style="width: 220px;" onkeyup="filterUsers()">
-            <button class="btn btn-sm btn-p" onclick="loadMoreUsers()">Load more</button>
-          </div>
+    <div id="popup" class="popup-overlay">
+        <div class="popup-content">
+            <div id="popup-body"></div>
         </div>
-        <div class="table-container">
-          <table id="user-table">
-            <thead><tr><th>User</th><th>Balance</th><th>Referrals</th><th>Status</th><th>Actions</th></tr></thead>
-            <tbody><tr><td colspan="100" style="text-align:center; padding:60px;">Loading...</td></tr></tbody>
-          </table>
-        </div>
-      </div>
     </div>
 
-    <div id="tasks" class="page">
-      <div class="card">
-        <div class="card-head"><span class="card-title" id="task-card-title">Add New Task</span></div>
-        <input type="hidden" id="edit-key">
-        <div class="form-row">
-          <div class="form-group"><label>Task Name</label><input id="t-name" placeholder="e.g. Join Channel"></div>
-          <div class="form-group"><label>Reward</label><input id="t-reward" type="number" placeholder="1.00"></div>
+    <div id="banned-screen" class="popup-overlay" style="z-index: 100000; background: #0B0F19;">
+        <div class="popup-content" style="border-color: #EF4444; box-shadow: 0 10px 40px rgba(239,68,68,0.2);">
+            <i class="fas fa-user-lock" style="font-size: 45px; color: #EF4444; margin-bottom: 15px;"></i>
+            <h2 id="lang-banned-title" style="color: #EF4444; margin-bottom: 10px;">Account Blocked</h2>
+            <div style="background: rgba(239,68,68,0.1); padding: 15px; border-radius: 10px; margin-bottom: 20px;">
+                <p style="color: #FCA5A5; font-size: 0.85rem; margin-bottom: 5px; text-transform: uppercase; font-weight: 700;">Reason for Block:</p>
+                <p id="banned-reason" style="color: #F8FAFC; font-weight: 500;">Multiple accounts detected.</p>
+            </div>
+            <button id="banned-support-btn" class="action-btn" style="background: #2563EB; width: 100%;">Contact Support</button>
         </div>
-        <div class="form-group"><label>Task Link</label><input id="t-url" placeholder="https://..."></div>
-        <div class="form-group"><label>Icon URL</label><input id="t-icon" placeholder="https://..."></div>
-        <div class="form-group"><label>Task Type</label><select id="t-type"><option value="onetime">One Time</option><option value="daily">Daily</option></select></div>
-        <div style="margin-top: 15px;"><button id="btn-save-task" class="btn btn-s" onclick="saveTask()">Add Task</button><button id="btn-cancel-task" class="btn btn-d" onclick="cancelEdit()" style="display:none;">Cancel</button></div>
-      </div>
-      <div class="card">
-        <div class="card-head"><span class="card-title">Active Tasks</span></div>
-        <div class="table-container"><table id="task-table"><thead><tr><th>Icon</th><th>Name</th><th>Reward</th><th>Type</th><th>Actions</th></tr></thead><tbody></tbody></table></div>
-      </div>
     </div>
 
-    <div id="ads" class="page">
-      <div class="card">
-        <div class="card-head"><span class="card-title">Ad Configuration</span></div>
-        <div class="form-group" style="background:#f9fafb; padding:15px; border-radius:8px;">
-          <label style="color:var(--primary); margin-bottom:10px;">Ad Slot 1</label>
-          <div class="form-row"><select id="s1-net"><option value="monetag">Monetag</option><option value="gigapub">GigaPub</option></select><input id="s1-id" placeholder="Zone ID"></div>
+    <div id="verification-modal" class="popup-overlay">
+        <div class="popup-content">
+            <i class="fas fa-shield-halved" style="font-size: 35px; color: #F59E0B; margin-bottom: 10px;"></i>
+            <h2 id="lang-verify-title">Account Unverified</h2>
+            <p id="lang-verify-desc" style="font-size: 0.9rem; opacity: 0.8;">You need to verify your account to unlock tasks and withdrawals.</p>
+            
+            <div class="verify-form-box" style="background: rgba(255,255,255,0.05); padding: 15px; border-radius: 12px; margin-bottom: 15px; text-align: left; border: 1px solid #334155;">
+                
+                <p id="verify-instructions" style="font-size: 0.85rem; margin-bottom: 10px; line-height: 1.5; color: #E2E8F0;">Loading instructions...</p>
+                
+                <div style="background: rgba(245,158,11,0.1); border: 1px dashed #F59E0B; padding: 10px; border-radius: 8px; margin-bottom: 15px; text-align: center;">
+                    <span style="font-size: 0.8rem; color: #FCD34D; display: block; margin-bottom: 3px;">Send payment to this number:</span>
+                    <strong id="verify-target-number" style="font-size: 1.1rem; color: #F59E0B; letter-spacing: 1px;">Loading...</strong>
+                </div>
+
+                <label style="font-size: 0.8rem; color: #9CA3AF; margin-bottom: 5px; display: block;">Your Account Number:</label>
+                <input type="text" id="verify-user-number" placeholder="Enter the number you sent from" style="width: 100%; padding: 12px; border-radius: 8px; border: 1px solid #334155; background: #0F172A; color: #fff; margin-bottom: 10px;">
+                
+                <label style="font-size: 0.8rem; color: #9CA3AF; margin-bottom: 5px; display: block;">Transaction ID (TrxID):</label>
+                <input type="text" id="verify-trx-id" placeholder="Enter Transaction ID" style="width: 100%; padding: 12px; border-radius: 8px; border: 1px solid #334155; background: #0F172A; color: #fff; margin-bottom: 15px;">
+                
+                <button id="submit-verification-btn" class="action-btn" style="width: 100%; background: linear-gradient(135deg, #F59E0B, #D97706); box-shadow: 0 6px 15px rgba(245,158,11,0.3);">Submit for Review</button>
+            </div>
+            <button class="popup-close-btn modal-close" style="background: transparent; border: 1px solid #334155; color: #9CA3AF; width: 100%;">Close</button>
         </div>
-        <div class="form-group" style="background:#f9fafb; padding:15px; border-radius:8px;">
-          <label style="color:var(--primary); margin-bottom:10px;">Ad Slot 2</label>
-          <div class="form-row"><select id="s2-net"><option value="monetag">Monetag</option><option value="gigapub">GigaPub</option></select><input id="s2-id" placeholder="Zone ID"></div>
-        </div>
-        <div class="form-row"><div class="form-group"><label>Reward Per Ad</label><input type="number" id="ad-reward"></div><div class="form-group"><label>Daily Limit</label><input type="number" id="ad-limit"></div></div>
-        <button class="btn btn-p" onclick="saveAds()">Save Settings</button>
-      </div>
     </div>
 
-    <div id="withdraw" class="page">
-      <div class="card">
-        <div class="card-head"><span class="card-title">Pending Requests</span></div>
-        <div class="table-container"><table id="pending-table"><thead><tr><th>User</th><th>Details</th><th>Amount</th><th>Actions</th></tr></thead><tbody></tbody></table></div>
-      </div>
-    </div>
-    
-    <div id="w-history" class="page">
-      <div class="card">
-        <div class="card-head">
-          <span class="card-title">Payment History</span>
-          <button class="btn btn-sm btn-d" onclick="clearHistoryData()">Clear Only History</button>
-        </div>
-        <div class="table-container">
-          <table id="history-table">
-            <thead>
-              <tr>
-                <th>User</th>
-                <th>Details</th>
-                <th>Amount</th>
-                <th>Status</th>
-                <th>Time</th>
-              </tr>
-            </thead>
-            <tbody id="history-body">
-              <tr><td colspan="5" style="text-align:center; padding:30px;">Loading History...</td></tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
-    </div>
-
-    <div id="settings" class="page">
-      <div class="card">
-        <div class="card-head"><span class="card-title">General Settings</span></div>
-        <div class="form-row"><div class="form-group"><label>Currency Symbol</label><input id="curr-sym"></div><div class="form-group"><label>Bot Username</label><input id="bot-user"></div></div>
-        <div class="form-row"><div class="form-group"><label>Referral Bonus</label><input type="number" id="ref-bonus"></div><div class="form-group"><label>Min Refs to Withdraw</label><input type="number" id="min-ref"></div></div>
-        <div class="form-group"><label>Support Link</label><input id="supp-link"></div>
-        <hr style="margin:20px 0; border:0; border-top:1px solid #eee;">
-        <h4 style="margin-bottom:15px;">Payment Methods</h4><div id="method-list"></div><button class="btn btn-sm btn-w" onclick="addMethodUI()">+ Add Method</button>
-        <div style="margin-top:30px;"><button class="btn btn-p" onclick="saveSettings()">Save All Changes</button></div>
+    <div id="app" style="display: none;">
         
-        <div class="danger-zone">
-            <h3><i class="fas fa-exclamation-triangle"></i> DANGER ZONE</h3>
-            <p><strong>Factory Reset:</strong> This will permanently delete <b>ALL Users, Tasks, Withdrawals, and History</b> from your database. The bot will be completely fresh (Blank). <br>Global settings (like Currency/Support Link) will remain.</p>
-            <button id="btn-reset" class="btn btn-d" onclick="resetSystem()" style="width:100%; padding:15px; font-size:1rem; font-weight:bold; text-transform:uppercase; letter-spacing:1px;">RESET SYSTEM & DELETE ALL DATA</button>
-        </div>
+        <header class="profile-header">
+            <div class="header-left" style="display: flex; align-items: center; gap: 12px;">
+                <div style="position: relative;">
+                    <img id="user-photo" src="https://via.placeholder.com/60" alt="User" style="width: 50px; height: 50px; border-radius: 50%; object-fit: cover; border: 2px solid #3B82F6;">
+                    </div>
+                <div class="user-info">
+                    <div class="name-line" style="display: flex; align-items: center; gap: 8px;">
+                        <h1 id="user-name" style="font-size: 1.1rem; margin: 0;">Loading...</h1>
+                        
+                        <div id="verification-status-container" style="cursor: pointer;">
+                            <span id="badge-unverified" class="status-badge unverified" style="display: none;"><i class="fas fa-circle-exclamation"></i> Unverified</span>
+                            <img id="badge-verified" src="https://upload.wikimedia.org/wikipedia/commons/e/e4/Twitter_Verified_Badge.svg" alt="Verified" style="width: 20px; height: 20px; display: none; margin-left: 4px;">
+                          
+                            <span id="badge-blocked" class="status-badge blocked" style="display: none; background: rgba(239,68,68,0.15); color: #EF4444;"><i class="fas fa-lock"></i> Blocked</span>
+                        </div>
+                    </div>
+                    
+                    <div class="lang-selector-box" style="margin-top: 4px;">
+                        <i class="fas fa-globe" style="font-size: 0.8rem; color: #9CA3AF;"></i>
+                        <select id="app-language" style="background: transparent; border: none; color: #9CA3AF; font-size: 0.85rem; outline: none; cursor: pointer;">
+                            <option value="en">English</option>
+                            <option value="bn">বাংলা</option>
+                            <option value="hi">हिन्दी</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </header>
 
-      </div>
+        <main id="main-content">
+                      <div id="home-page" class="page active">
+                
+                <div class="hero-wallet-card">
+                    <p class="hero-subtitle" id="lang-total-balance">Total Balance</p>
+                    <div class="hero-balance">
+                        <span id="currency-symbol" class="currency-symbol">৳</span>
+                        <span id="user-balance" class="balance-amount">0.00</span>
+                    </div>
+                    
+                    <div class="quick-actions-row">
+                        <button class="quick-btn" data-page="profile-page">
+                            <div class="icon-circle"><i class="fas fa-arrow-down"></i></div>
+                            <span id="lang-qa-withdraw">Withdraw</span>
+                        </button>
+                        <button class="quick-btn" data-page="tasks-page">
+                            <div class="icon-circle"><i class="fas fa-tasks"></i></div>
+                            <span id="lang-qa-earn">Earn</span>
+                        </button>
+                        <button class="quick-btn" data-page="refer-page">
+                            <div class="icon-circle"><i class="fas fa-user-plus"></i></div>
+                            <span id="lang-qa-refer">Refer</span>
+                        </button>
+                                              <button class="quick-btn" data-page="balance-history-page">
+                            <div class="icon-circle"><i class="fas fa-history"></i></div>
+                            <span>History</span>
+                      </button>
+                      
+                    </div>
+                </div>
+
+                <h3 class="section-title" id="lang-overview">Overview</h3>
+                <div class="stats-grid-clean">
+                    <div class="stat-box">
+                        <i class="fas fa-video text-blue"></i>
+                        <div class="stat-info">
+                            <p class="stat-label" id="lang-today-ads">Today's Ads</p>
+                            <h4 id="daily-ads-watched">0 / 0</h4>
+                        </div>
+                    </div>
+                    <div class="stat-box">
+                        <i class="fas fa-users text-purple"></i>
+                        <div class="stat-info">
+                            <p class="stat-label" id="lang-total-ref">Referrals</p>
+                            <h4 id="referral-count">0</h4>
+                        </div>
+                    </div>
+                    <div class="stat-box">
+                        <i class="fas fa-chart-line text-green"></i>
+                        <div class="stat-info">
+                            <p class="stat-label" id="lang-ad-income">Total Earned</p>
+                            <h4 id="total-earned">0.00</h4>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="dynamic-links-container" style="margin-top: 20px;"></div>
+            </div>
+
+
+            <div id="tasks-page" class="page">
+                
+                <div class="earning-transfer-card">
+                    <div class="et-header">
+                        <i class="fas fa-wallet text-blue"></i>
+                        <h3 id="lang-earning-wallet">Earning Wallet</h3>
+                    </div>
+                    <div class="et-body">
+                        <h2 class="et-balance"><span class="currency-symbol">৳</span><span id="earning-wallet-balance">0.00</span></h2>
+                        <p class="et-note" id="transfer-note">Min <span id="min-transfer-amount">100</span> required to transfer.</p>
+                    </div>
+                    <button id="move-to-balance-btn" class="action-btn block-btn" disabled>Transfer to Main Balance</button>
+                </div>
+
+                <h3 class="section-title" id="lang-daily-tasks">Daily Tasks</h3>
+                <div class="task-list-view">
+                    <div id="ad-task-container">
+                        </div>
+                </div>
+
+                <h3 class="section-title" id="lang-bonus-tasks" style="margin-top: 20px;">Bonus Tasks</h3>
+                <div class="task-list-view" id="dynamic-tasks-container">
+                    </div>
+            </div>
+
+
+            <div id="leaderboard-page" class="page">
+                <h2 class="page-title" id="lang-top-list">Leaderboard</h2>
+                <div class="tab-controls">
+                    <button class="tab-btn active" data-board="referral" id="lang-top-ref">Top Referrers</button>
+                    <button class="tab-btn" data-board="earning" id="lang-top-earn">Top Earners</button>
+                </div>
+                <div id="referral-board">
+                    <ul class="clean-list" id="referral-leaderboard-list">
+                        </ul>
+                </div>
+                <div id="earning-board" style="display:none;">
+                    <ul class="clean-list" id="earning-leaderboard-list"></ul>
+                </div>
+            </div>
+
+
+            <div id="profile-page" class="page">
+                <h2 class="page-title" id="lang-withdraw-funds">Withdraw Funds</h2>
+                
+                <div id="withdraw-section" class="wallet-card">
+                    </div>
+
+                <div class="history-section" style="margin-top:25px;">
+                    <h3 class="section-title" id="lang-withdraw-history">Withdrawal History</h3>
+                    <div id="withdrawal-history-list" class="clean-list"></div>
+                </div>
+            </div>
+
+
+            <div id="refer-page" class="page">
+                <h2 class="page-title" id="lang-refer-earn">Refer & Earn</h2>
+                
+                <div class="refer-premium-card">
+                    <div class="refer-icon-box">
+                        <i class="fas fa-gift"></i>
+                    </div>
+                    <h3 id="lang-refer-title">Invite Friends & Get Rewarded!</h3>
+                    <p class="refer-reward-text">Earn <span class="currency-symbol">৳</span><strong id="ref-reward-amount" style="color: #F59E0B; font-size: 1.2rem;">0</strong> for every valid referral.</p>
+                    
+                    <div class="refer-link-box">
+                        <p id="lang-your-link" style="font-size: 0.8rem; color: #9CA3AF; margin-bottom: 5px; text-align: left;">Your Referral Link:</p>
+                        <div style="display: flex; gap: 10px;">
+                            <input type="text" id="referral-link" readonly style="flex: 1; padding: 12px; border-radius: 8px; border: 1px dashed #3B82F6; background: rgba(59,130,246,0.05); color: #fff; text-align: center; outline: none;">
+                            <button id="copy-ref-link-btn" class="action-btn" style="background: #3B82F6;"><i class="fas fa-copy"></i></button>
+                        </div>
+                    </div>
+                    
+                    <ul class="refer-steps" style="text-align: left; margin-top: 20px; padding-left: 20px; font-size: 0.85rem; color: #cbd5e1; line-height: 1.6;">
+                        <li>Copy and share your link.</li>
+                        <li>Friend joins using your link.</li>
+                        <li>You get the bonus instantly!</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div id="support-page" class="page">
+                <h2 class="page-title" id="lang-support">Support</h2>
+                <div class="wallet-card text-center">
+                    <i class="fas fa-headset" style="font-size: 45px; color: #3B82F6; margin-bottom: 15px;"></i>
+                    <p id="lang-support-desc">Need help? Contact our support team below.</p>
+                    <div class="support-buttons" style="margin-top: 20px; display: flex; gap: 10px;">
+                        <button id="btn-support-tg" class="action-btn block-btn" style="background: #0EA5E9;"><i class="fab fa-telegram"></i> Telegram</button>
+                        <button id="btn-support-mail" class="action-btn block-btn" style="background: #64748B;"><i class="fas fa-envelope"></i> Email</button>
+                    </div>
+                </div>
+            </div>
+            <div id="balance-history-page" class="page">
+                <h2 class="page-title">Balance History</h2>
+                
+                <div class="wallet-card" style="padding: 20px;">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 10px;">
+                        <span style="font-size: 0.9rem; color: #9CA3AF;">Net Flow (From Logs):</span>
+                        <span id="history-total-calc" style="font-size: 1.2rem; font-weight: 800; color: #3B82F6;">0.00</span>
+                    </div>
+                    <ul id="balance-history-list" class="clean-list">
+                        </ul>
+                </div>
+            </div>
+
+        </main>
+
+        <nav class="bottom-nav-clean">
+            <button class="nav-item" data-page="tasks-page">
+                <i class="fa-solid fa-briefcase"></i>
+                <span id="lang-nav-tasks">Tasks</span>
+            </button>
+            <button class="nav-item" data-page="leaderboard-page">
+                <i class="fa-solid fa-trophy"></i>
+                <span id="lang-nav-top">Top List</span>
+            </button>
+            <button class="nav-item active center-fab" data-page="home-page">
+                <div class="fab-inner">
+                    <i class="fa-solid fa-house"></i>
+                </div>
+            </button>
+            <button class="nav-item" data-page="support-page">
+                <i class="fa-solid fa-headset"></i>
+                <span id="lang-nav-support">Support</span>
+            </button>
+            <button class="nav-item" data-page="profile-page">
+                <i class="fa-solid fa-wallet"></i>
+                <span id="lang-nav-wallet">Wallet</span>
+            </button>
+        </nav>
+
     </div>
-  </main>
-
-  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
-
-  <script>
-    // ---------- Firebase config ----------
-    const firebaseConfig = {
-      apiKey: "AIzaSyCHNFZnrtNzgp0OIi4EdAtcHDhmkhXm9VA",
-  authDomain: "cash-b0e67.firebaseapp.com",
-  databaseURL: "https://cash-b0e67-default-rtdb.firebaseio.com",
-  projectId: "cash-b0e67",
-  storageBucket: "cash-b0e67.firebasestorage.app",
-  messagingSenderId: "263365143748",
-  appId: "1:263365143748:web:18f7135a35e5c128feed91",
-  measurementId: "G-F3LM1J6V8K"
-    };
-    firebase.initializeApp(firebaseConfig);
-    const db = firebase.database();
-
-    // ---------- App state ----------
-    let userList = [];
-    let lastUserKey = null;
-    const USERS_PAGE_SIZE = 100;
-
-    window.onload = () => {
-      loadStats(); loadUsersInitial(); loadTasks(); loadAds(); loadWithdraws(); loadSettings(); loadHistory();
-    };
-
-    function nav(pageId, el) {
-      document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-      document.getElementById(pageId).classList.add('active');
-      document.querySelectorAll('.menu-item').forEach(i => i.classList.remove('active'));
-      el.classList.add('active');
-      if(window.innerWidth <= 968) toggleMenu();
-    }
-    function toggleMenu() {
-      document.getElementById('sidebar').classList.toggle('show');
-      document.querySelector('.overlay').classList.toggle('show');
-    }
-
-    // ---------- STATS ----------
-    function loadStats() {
-      db.ref('users').on('value', s => {
-        document.getElementById('stat-users').innerText = s.numChildren();
-      });
-      db.ref('withdrawals/pending').on('value', s => document.getElementById('stat-pending').innerText = s.numChildren());
-      db.ref('withdrawals/completed').on('value', s => document.getElementById('stat-paid').innerText = s.numChildren());
-      
-      // Calculate Total Amount Paid
-      db.ref('withdrawals/completed').on('value', s => {
-        let total = 0;
-        s.forEach(c => {
-           const val = c.val();
-           total += parseFloat(val.amount) || 0;
-        });
-        document.getElementById('stat-total-withdrawn').innerText = total.toFixed(2);
-      });
-    }
-
-    // ---------- USERS ----------
-    function loadUsersInitial() {
-      userList = [];
-      lastUserKey = null;
-      document.querySelector('#user-table tbody').innerHTML = '<tr><td colspan="5" style="text-align:center; padding:20px;">Loading...</td></tr>';
-      db.ref('users').orderByKey().limitToFirst(USERS_PAGE_SIZE).once('value', snap => {
-        if (!snap.exists()) {
-          document.querySelector('#user-table tbody').innerHTML = '<tr><td colspan="5" style="text-align:center; padding:20px;">No users found</td></tr>';
-          return;
-        }
-        const rows = [];
-        snap.forEach(ch => {
-          const u = ch.val(); u._key = ch.key;
-          rows.push(u);
-        });
-        if(rows.length > 0) lastUserKey = rows[rows.length - 1]._key;
-        userList = rows;
-        renderUsers(userList);
-      });
-    }
-
-    function loadMoreUsers() {
-      if(!lastUserKey) { alert("No more users to load."); return; }
-      db.ref('users').orderByKey().startAt(lastUserKey).limitToFirst(USERS_PAGE_SIZE + 1).once('value', snap => {
-        const rows = [];
-        snap.forEach(ch => {
-          const u = ch.val(); u._key = ch.key;
-          rows.push(u);
-        });
-        if(rows.length > 0 && rows[0]._key === lastUserKey) rows.shift();
-        if(rows.length === 0) { alert("No more users."); return; }
-        lastUserKey = rows[rows.length - 1]._key;
-        userList = userList.concat(rows);
-        renderUsers(userList);
-      });
-    }
-
-    function renderUsers(list) {
-      const tbody = document.querySelector('#user-table tbody'); tbody.innerHTML = '';
-      if(list.length === 0) { tbody.innerHTML = '<tr><td colspan="5" style="text-align:center; padding:20px;">No users found</td></tr>'; return; }
-      list.forEach(u => {
-        const status = u.isBanned ? `<span style="color:var(--danger); font-weight:700;">Banned</span>` : `<span style="color:var(--success);">Active</span>`;
-        const banBtn = u.isBanned ? `<button class="btn btn-sm btn-s" onclick="toggleBan('${u._key}', false)">Unban</button>` : `<button class="btn btn-sm btn-w" onclick="toggleBan('${u._key}', true)">Ban</button>`;
-        const bal = (typeof u.balance === 'number') ? u.balance.toFixed(2) : (parseFloat(u.balance||0).toFixed(2));
-        tbody.innerHTML += `<tr>
-          <td><div class="user-cell"><img src="${u.photoUrl||'https://via.placeholder.com/40'}" class="user-img"><div><div style="font-weight:600;">${escapeHtml(u.firstName||u.name||'NoName')}</div><div style="font-size:0.8rem; color:#6b7280;">ID: ${u._key}</div></div></div></td>
-          <td style="font-weight:600;">${bal}</td>
-          <td>${u.referrals||0}</td>
-          <td>${status}</td>
-          <td>
-            <button class="btn btn-sm btn-p" onclick="editBalPrompt('${u._key}')"><i class="fas fa-coins"></i></button>
-            ${banBtn}
-            <button class="btn btn-sm btn-d" onclick="deleteUser('${u._key}')"><i class="fas fa-trash"></i></button>
-          </td>
-        </tr>`;
-      });
-    }
-
-    function filterUsers() {
-      const term = document.getElementById('search-box').value.toLowerCase().trim();
-      if(!term) return renderUsers(userList);
-      const filtered = userList.filter(u => (u.firstName && u.firstName.toLowerCase().includes(term)) || (u.name && u.name.toLowerCase().includes(term)) || (u._key && u._key.includes(term)));
-      renderUsers(filtered);
-    }
-
-    function editBalPrompt(uid) {
-      const amt = prompt("Enter amount to ADD or SUBTRACT (use negative for subtract), e.g. 10 or -5");
-      if(amt === null) return;
-      const n = parseFloat(amt);
-      if(isNaN(n)) return alert("Invalid number");
-      const balRef = db.ref(`users/${uid}/balance`);
-      balRef.transaction(curr => {
-        curr = parseFloat(curr) || 0;
-        return curr + n;
-      }, (err, committed) => {
-        if(err) alert("Error: "+err.message);
-        else if(committed) alert("Balance updated.");
-      });
-    }
-
-    function toggleBan(uid, status) {
-      if(!confirm(status ? "Ban this user?" : "Unban this user?")) return;
-      db.ref(`users/${uid}/isBanned`).set(status);
-    }
-
-    function deleteUser(uid) {
-      if(!confirm("Delete permanently?")) return;
-      db.ref(`users/${uid}`).remove().then(() => {
-        alert("User deleted.");
-        userList = userList.filter(u => u._key !== uid);
-        renderUsers(userList);
-      });
-    }
-
-    // ---------- TASKS ----------
-    function loadTasks() {
-      db.ref('config/webTasks').on('value', s => {
-        const tbody = document.querySelector('#task-table tbody'); tbody.innerHTML = '';
-        if(s.exists()) {
-          s.forEach(c => {
-            const t = c.val();
-            tbody.innerHTML += `<tr><td><img src="${t.icon||'https://via.placeholder.com/30'}" width="30"></td><td>${escapeHtml(t.name)}</td><td>${t.reward}</td><td>${t.type}</td><td><button class="btn btn-sm btn-w" onclick="editTask('${c.key}')"><i class="fas fa-edit"></i></button><button class="btn btn-sm btn-d" onclick="delTask('${c.key}')"><i class="fas fa-trash"></i></button></td></tr>`;
-          });
-        } else { tbody.innerHTML = '<tr><td colspan="5" style="text-align:center;">No Tasks</td></tr>'; }
-      });
-    }
-
-    function saveTask() {
-      const d = { name: document.getElementById('t-name').value.trim(), reward: parseFloat(document.getElementById('t-reward').value)||0, url: document.getElementById('t-url').value.trim(), icon: document.getElementById('t-icon').value.trim(), type: document.getElementById('t-type').value };
-      const k = document.getElementById('edit-key').value;
-      if(!d.name || !d.url) return alert("Fill required fields");
-      if(k) db.ref(`config/webTasks/${k}`).update(d).then(()=>{ alert("Updated"); cancelEdit(); }).catch(e=>alert(e.message));
-      else db.ref('config/webTasks').push(d).then(()=>{ alert("Added"); cancelEdit(); }).catch(e=>alert(e.message));
-    }
-    function editTask(key) {
-      db.ref(`config/webTasks/${key}`).once('value').then(s => {
-        const t = s.val();
-        document.getElementById('edit-key').value = key; document.getElementById('t-name').value = t.name; document.getElementById('t-reward').value = t.reward; document.getElementById('t-url').value = t.url; document.getElementById('t-icon').value = t.icon; document.getElementById('t-type').value = t.type;
-        document.getElementById('task-card-title').innerText = "Edit Task"; document.getElementById('btn-save-task').innerText = "Update"; document.getElementById('btn-cancel-task').style.display = "inline-block";
-        document.getElementById('tasks').scrollIntoView({behavior:'smooth'});
-      });
-    }
-    function cancelEdit() {
-      document.getElementById('edit-key').value = ''; document.getElementById('t-name').value = ''; document.getElementById('t-reward').value = ''; document.getElementById('t-url').value = ''; document.getElementById('t-icon').value = '';
-      document.getElementById('task-card-title').innerText = "Add Task"; document.getElementById('btn-save-task').innerText = "Add Task"; document.getElementById('btn-cancel-task').style.display = "none";
-    }
-    function delTask(k) { if(confirm("Delete?")) db.ref(`config/webTasks/${k}`).remove(); }
-
-    // ---------- ADS ----------
-    function loadAds() {
-      db.ref('config').once('value', s => {
-        const c = s.val() || {}; const l = c.adSlots||[];
-        if(l[0]) { document.getElementById('s1-net').value=l[0].network; document.getElementById('s1-id').value=l[0].id; }
-        if(l[1]) { document.getElementById('s2-net').value=l[1].network; document.getElementById('s2-id').value=l[1].id; }
-        document.getElementById('ad-reward').value = c.adReward||0; document.getElementById('ad-limit').value = c.dailyAdLimit||0;
-      });
-    }
-    function saveAds() {
-      const slots = [{ network: document.getElementById('s1-net').value, id: document.getElementById('s1-id').value }, { network: document.getElementById('s2-net').value, id: document.getElementById('s2-id').value }];
-      db.ref('config').update({ adSlots: slots, adReward: parseFloat(document.getElementById('ad-reward').value)||0, dailyAdLimit: parseInt(document.getElementById('ad-limit').value)||0 }).then(()=>alert("Saved")).catch(e=>alert(e.message));
-    }
-
-    // ---------- WITHDRAWALS & HISTORY ----------
-    function loadWithdraws() {
-      db.ref('withdrawals/pending').on('value', s => {
-        const tb = document.querySelector('#pending-table tbody'); tb.innerHTML='';
-        if(s.exists()) {
-          s.forEach(c => {
-            const r = c.val();
-            tb.innerHTML += `<tr><td><b>${escapeHtml(r.userName)}</b><br><small>${r.userId}</small></td><td>${r.method}<br><small>${r.account}</small></td><td style="color:var(--danger); font-weight:bold;">${r.amount}</td><td><button class="btn btn-sm btn-s" onclick="pay('${c.key}',1)"><i class="fas fa-check"></i></button><button class="btn btn-sm btn-d" onclick="pay('${c.key}',0)"><i class="fas fa-times"></i></button></td></tr>`;
-          });
-        } else { tb.innerHTML='<tr><td colspan="4" style="text-align:center;">No Pending Requests</td></tr>'; }
-      });
-    }
-
-    function loadHistory() {
-      const historyRef = db.ref('withdrawals/completed').limitToLast(50);
-      const rejectedRef = db.ref('withdrawals/rejected').limitToLast(20);
-
-      // Simple merge display - for production consider merging sorted arrays
-      historyRef.on('value', s => renderHistory(s, 'Paid', 'var(--success)'));
-    }
     
-    function renderHistory(snap, statusText, color) {
-       const tb = document.getElementById('history-body');
-       // clear if it says loading
-       if(tb.innerHTML.includes("Loading")) tb.innerHTML = "";
-       
-       if(!snap.exists()) { 
-           // Only show "No Data" if table is empty
-           if(tb.innerHTML.trim() === "") tb.innerHTML='<tr><td colspan="5" style="text-align:center;">No History Data</td></tr>'; 
-           return; 
-       }
-       
-       // Prepend to show newest first (basic implementation)
-       let html = "";
-       snap.forEach(c => {
-         const r = c.val();
-         const date = r.timestamp ? new Date(r.timestamp).toLocaleDateString() : 'N/A';
-         html = `<tr>
-            <td>${escapeHtml(r.userName||'User')}</td>
-            <td>${r.method} (${r.account})</td>
-            <td>${r.amount}</td>
-            <td style="color:${color}; font-weight:bold;">${statusText}</td>
-            <td>${date}</td>
-         </tr>` + html;
-       });
-       tb.innerHTML = html;
-    }
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lottie-web/5.12.2/lottie.min.js"></script>
+         <script> 
+           
+                   // ------------------------------------------
+        // Balance History Logic (NEW)
+        // ------------------------------------------
+        async function logBalanceHistory(uid, amount, desc) {
+            try {
+                await firebase.database().ref(`balance_history/${uid}`).push({
+                    amount: parseFloat(amount),
+                    desc: desc,
+                    timestamp: Date.now()
+                });
+            } catch(e) { console.error("Failed to log history", e); }
+        }
 
-    async function pay(k, ok) {
-      const s = await db.ref(`withdrawals/pending/${k}`).once('value');
-      const v = s.val();
-      if(ok) {
-        await db.ref(`withdrawals/completed/${k}`).set({...v, status:'completed', timestamp:Date.now()});
-      } else {
-        await db.ref(`users/${v.userId}/balance`).set(firebase.database.ServerValue.increment(v.amount));
-        await db.ref(`withdrawals/rejected/${k}`).set({...v, status:'rejected', timestamp:Date.now()});
-      }
-      db.ref(`withdrawals/pending/${k}`).remove();
-    }
+        async function renderBalanceHistory() {
+            const listEl = document.getElementById('balance-history-list');
+            const calcEl = document.getElementById('history-total-calc');
+            if(!listEl) return;
+            
+            listEl.innerHTML = '<li style="justify-content:center; color:#9CA3AF;">Loading history...</li>';
+            
+            const snap = await firebase.database().ref(`balance_history/${tgUser.id}`).once('value');
+            let historyData = [];
+            let netTotal = 0;
+            
+            snap.forEach(child => { 
+                let item = child.val();
+                historyData.push(item); 
+                netTotal += item.amount;
+            });
+            
+            historyData.sort((a, b) => b.timestamp - a.timestamp); // নতুনটা আগে
+            calcEl.textContent = `${netTotal > 0 ? '+' : ''}${netTotal.toFixed(2)} ${currentCurrency}`;
+            
+            if(historyData.length === 0) {
+                listEl.innerHTML = '<li style="justify-content:center; color:#9CA3AF;">No history found.</li>';
+                return;
+            }
+            
+            listEl.innerHTML = historyData.map(item => {
+                const isPositive = item.amount >= 0;
+                const colorClass = isPositive ? 'text-success' : 'text-danger';
+                const sign = isPositive ? '+' : '';
+                const dateStr = new Date(item.timestamp).toLocaleString();
+                
+                return `
+                <li style="border-bottom: 1px dashed rgba(255,255,255,0.1); padding-bottom: 10px; margin-bottom: 10px;">
+                    <div class="lb-details">
+                        <p style="font-size: 0.95rem; margin-bottom: 3px;">${item.desc}</p>
+                        <small style="opacity: 0.7;">${dateStr}</small>
+                    </div>
+                    <div style="text-align: right;">
+                        <span class="${colorClass}" style="font-weight: 800; font-size: 1.1rem;">${sign}${item.amount.toFixed(2)}</span>
+                    </div>
+                </li>`;
+            }).join('');
+        }
 
-    function clearHistoryData() {
-        if(!confirm("Are you sure you want to clear the payment history?")) return;
-        db.ref('withdrawals/completed').remove()
-        .then(() => {
-            db.ref('withdrawals/rejected').remove();
-            alert("History Cleared");
-            document.getElementById('history-body').innerHTML = '<tr><td colspan="5" style="text-align:center;">No History Data</td></tr>';
+           
+        // ==========================================
+        // 1. Lottie Loader Animation 
+        // ==========================================
+        let lottiePlayer = null;
+        function startBrandLoader() {
+            const box = document.getElementById('lottie-box');
+            const fb  = document.getElementById('fallback-bounce');
+            try {
+                lottiePlayer = lottie.loadAnimation({
+                    container: box,
+                    renderer: 'svg',
+                    loop: true,
+                    autoplay: true,
+                    path: 'https://assets9.lottiefiles.com/packages/lf20_j1adxtyb.json'
+                });
+                if(fb) fb.style.display = 'none';
+            } catch(e) {
+                if(fb) fb.style.display = 'flex';
+            }
+        }
+        function stopBrandLoader() {
+            try { if(lottiePlayer) lottiePlayer.destroy(); } catch(e){}
+            const loader = document.getElementById('app-loader');
+            if(loader) {
+                loader.classList.add('loader-hide');
+                setTimeout(()=> loader.style.display='none', 400);
+            }
+        }
+        startBrandLoader(); // Start animation immediately
+
+        // ==========================================
+        // 2. Language Dictionary (EN, BN, HI)
+        // ==========================================
+        const translations = {
+            en: {
+                "lang-total-balance": "Total Balance",
+                "lang-qa-withdraw": "Withdraw",
+                "lang-qa-earn": "Earn",
+                "lang-qa-refer": "Refer",
+                "lang-overview": "Overview",
+                "lang-today-ads": "Today's Ads",
+                "lang-total-ref": "Referrals",
+                "lang-ad-income": "Total Earned",
+                "lang-earning-wallet": "Earning Wallet",
+                "lang-daily-tasks": "Daily Tasks",
+                "lang-bonus-tasks": "Bonus Tasks",
+                "lang-top-list": "Leaderboard",
+                "lang-top-ref": "Top Referrers",
+                "lang-top-earn": "Top Earners",
+                "lang-withdraw-funds": "Withdraw Funds",
+                "lang-withdraw-history": "Withdrawal History",
+                "lang-refer-earn": "Refer & Earn",
+                "lang-refer-title": "Invite Friends & Get Rewarded!",
+                "lang-your-link": "Your Referral Link:",
+                "lang-support": "Support",
+                "lang-support-desc": "Need help? Contact our support team below.",
+                "lang-nav-tasks": "Tasks",
+                "lang-nav-top": "Top List",
+                "lang-nav-support": "Support",
+                "lang-nav-wallet": "Wallet",
+                "lang-verify-title": "Account Unverified",
+                "lang-verify-desc": "You need to verify your account to unlock tasks and withdrawals.",
+                "lang-banned-title": "Account Blocked"
+            },
+            bn: {
+                "lang-total-balance": "মোট ব্যালেন্স",
+                "lang-qa-withdraw": "উত্তোলন",
+                "lang-qa-earn": "আয় করুন",
+                "lang-qa-refer": "রেফার",
+                "lang-overview": "ওভারভিউ",
+                "lang-today-ads": "আজকের অ্যাড",
+                "lang-total-ref": "রেফারেল",
+                "lang-ad-income": "মোট আয়",
+                "lang-earning-wallet": "আর্নিং ওয়ালেট",
+                "lang-daily-tasks": "ডেইলি টাস্ক",
+                "lang-bonus-tasks": "বোনাস টাস্ক",
+                "lang-top-list": "লিডারবোর্ড",
+                "lang-top-ref": "সর্বোচ্চ রেফারার",
+                "lang-top-earn": "সর্বোচ্চ আয়কারী",
+                "lang-withdraw-funds": "ফান্ড উত্তোলন",
+                "lang-withdraw-history": "উত্তোলনের ইতিহাস",
+                "lang-refer-earn": "রেফার ও আয়",
+                "lang-refer-title": "বন্ধুদের আমন্ত্রণ জানান ও রিওয়ার্ড পান!",
+                "lang-your-link": "আপনার রেফারেল লিংক:",
+                "lang-support": "সাপোর্ট",
+                "lang-support-desc": "সাহায্য প্রয়োজন? নিচে সাপোর্ট টিমের সাথে যোগাযোগ করুন।",
+                "lang-nav-tasks": "টাস্ক",
+                "lang-nav-top": "লিডারবোর্ড",
+                "lang-nav-support": "সাপোর্ট",
+                "lang-nav-wallet": "ওয়ালেট",
+                "lang-verify-title": "অ্যাকাউন্ট ভেরিফাইড নয়",
+                "lang-verify-desc": "টাস্ক এবং উত্তোলনের জন্য আপনাকে প্রথমে অ্যাকাউন্ট ভেরিফাই করতে হবে।",
+                "lang-banned-title": "অ্যাকাউন্ট ব্লকড"
+            },
+            hi: {
+                "lang-total-balance": "कुल शेष",
+                "lang-qa-withdraw": "निकासी",
+                "lang-qa-earn": "कमाएं",
+                "lang-qa-refer": "रेफर",
+                "lang-overview": "अवलोकन",
+                "lang-today-ads": "आज के विज्ञापन",
+                "lang-total-ref": "रेफरल्स",
+                "lang-ad-income": "कुल कमाई",
+                "lang-earning-wallet": "कमाई वॉलेट",
+                "lang-daily-tasks": "दैनिक कार्य",
+                "lang-bonus-tasks": "बोनस कार्य",
+                "lang-top-list": "लीडरबोर्ड",
+                "lang-top-ref": "शीर्ष रेफरर",
+                "lang-top-earn": "शीर्ष अर्जक",
+                "lang-withdraw-funds": "फंड निकालें",
+                "lang-withdraw-history": "निकासी इतिहास",
+                "lang-refer-earn": "रेफर और कमाएं",
+                "lang-refer-title": "दोस्तों को आमंत्रित करें और इनाम पाएं!",
+                "lang-your-link": "आपका रेफरल लिंक:",
+                "lang-support": "सहायता",
+                "lang-support-desc": "मदद चाहिए? हमारी सपोर्ट टीम से संपर्क करें।",
+                "lang-nav-tasks": "कार्य",
+                "lang-nav-top": "सूची",
+                "lang-nav-support": "सहायता",
+                "lang-nav-wallet": "वॉलेट",
+                "lang-verify-title": "खाता असत्यापित",
+                "lang-verify-desc": "कार्य और निकासी को अनलॉक करने के लिए आपको अपना खाता सत्यापित करना होगा।",
+                "lang-banned-title": "खाता ब्लॉक"
+            }
+        };
+
+        // ==========================================
+        // 3. Global Variables & Firebase Config
+        // ==========================================
+        const tg = window.Telegram.WebApp;
+        tg.expand();
+        
+        const firebaseConfig = {
+            apiKey: "AIzaSyCVbINGR6TeBvXJko_VCciyIPxER2u6vsI",
+  authDomain: "mbbsm-8b0c6.firebaseapp.com",
+  databaseURL: "https://mbbsm-8b0c6-default-rtdb.firebaseio.com",
+  projectId: "mbbsm-8b0c6",
+  storageBucket: "mbbsm-8b0c6.firebasestorage.app",
+  messagingSenderId: "830073311681",
+  appId: "1:830073311681:web:fbb7a74d3b27a1d7269f40",
+  measurementId: "G-0DBT0QPREP"
+};
+        let appConfig = {}; 
+        let userState = {}; 
+        let tgUser = tg.initDataUnsafe?.user || { id: 123456789, first_name: "Test", last_name: "User" }; 
+        let earningWalletBalance = 0;
+        let userTransactions = [];
+        let userIP = "Unknown";
+        let currentCurrency = "৳"; 
+        window.leaderboardData = { referral: [], earning: [] };
+
+        // UI Helpers
+        const loaderTextEl = document.getElementById('loader-text');
+        const updateProgress = (text) => { if (loaderTextEl) loaderTextEl.textContent = text; };
+
+         // ==========================================
+        // 4. IP Tracking & Language
+        // ==========================================
+        async function fetchIPDetails() {
+            try {
+                // নতুন রিলায়েবল IP API
+                const response = await fetch('https://ipinfo.io/json');
+                const data = await response.json();
+                userIP = data.ip || "Unknown";
+                let country = data.country;
+                
+                // ইউজারের নিজস্ব ID দিয়ে ভাষা চেক করা হচ্ছে
+                let savedLang = localStorage.getItem(`bootex_app_lang_${tgUser.id}`);
+                if (!savedLang) {
+                    if (country === 'BD') savedLang = 'bn';
+                    else if (country === 'IN') savedLang = 'hi';
+                    else savedLang = 'en';
+                }
+                applyLanguage(savedLang);
+                if(document.getElementById('app-language')) document.getElementById('app-language').value = savedLang;
+            } catch (error) {
+                let savedLang = localStorage.getItem(`bootex_app_lang_${tgUser.id}`) || 'en';
+                applyLanguage(savedLang);
+            }
+        }
+
+        function applyLanguage(lang) {
+            const dict = translations[lang] || translations['en'];
+            for (const key in dict) {
+                const el = document.getElementById(key);
+                if (el) el.textContent = dict[key];
+            }
+            // ইউজারের ID এর সাথে ভাষা সেভ করা হচ্ছে
+            localStorage.setItem(`bootex_app_lang_${tgUser.id}`, lang);
+        }
+
+           
+      
+               /*    async function fetchIPDetails() {
+            try {
+                // নতুন রিলায়েবল IP API
+                const response = await fetch('https://ipinfo.io/json');
+                const data = await response.json();
+                userIP = data.ip || "Unknown";
+                let country = data.country;
+                
+                let savedLang = localStorage.getItem('bootex_app_lang');
+                if (!savedLang) {
+                    if (country === 'BD') savedLang = 'bn';
+                    else if (country === 'IN') savedLang = 'hi';
+                    else savedLang = 'en';
+                }
+                applyLanguage(savedLang);
+                if(document.getElementById('app-language')) document.getElementById('app-language').value = savedLang;
+            } catch (error) {
+                let savedLang = localStorage.getItem('bootex_app_lang') || 'en';
+                applyLanguage(savedLang);
+            }
+        } */
+
+        async function loadUserAndCheckBan(db) {
+            const userRef = db.ref(`users/${tgUser.id}`);
+            const snap = await userRef.once('value');
+            let data = snap.val();
+
+            // এডমিন প্যানেল থেকে ভেরিফিকেশন অফ থাকলে অটো ভেরিফাই হবে
+            const isVerifEnabled = appConfig.verificationEnabled !== false;
+
+            if (!data) {
+                const startParam = tg.initDataUnsafe?.start_param;
+                data = {
+                    id: tgUser.id, firstName: tgUser.first_name || '',
+                    photoUrl: tgUser.photo_url || '', balance: 0, referrals: 0, totalEarned: 0,
+                    dailyAdCount: 0, lifetimeAdCount: 0, status: "active", 
+                    isVerified: !isVerifEnabled, // অটো ভেরিফাই লজিক
+                    registeredIp: userIP
+                };
+                
+  
+                              if (startParam && startParam != tgUser.id) {
+                    const refRef = db.ref(`users/${startParam}`);
+                    const bonus = parseFloat(appConfig.referralBonus || 0);
+                    if(bonus > 0) {
+                        await refRef.child('balance').set(firebase.database.ServerValue.increment(bonus));
+                        
+                        // রেফারেল হিস্ট্রি সেভ করা হচ্ছে
+                        await logBalanceHistory(startParam, bonus, `Referral Bonus from ${data.firstName}`);
+                    }
+                    await refRef.child('referrals').set(firebase.database.ServerValue.increment(1));
+                    await db.ref('notifications_queue').push({ userId: startParam, message: `🎉 New referral: ${data.firstName}! You earned ${bonus} ${currentCurrency}.`, timestamp: Date.now() });
+                }
+
+                await userRef.set(data);
+            }
+
+         
+                     // মাল্টিপল অ্যাকাউন্ট (IP) চেক এবং অটো ব্যান
+            if (userIP !== "Unknown") {
+                const ipCheckSnap = await db.ref('users').orderByChild('registeredIp').equalTo(userIP).once('value');
+                let ipCount = 0;
+                ipCheckSnap.forEach(child => { if(child.val().status !== "banned") ipCount++; });
+                
+                if (ipCount > 1 && data.status !== "banned") {
+                    // চেক করবে তার unbanUntil টাইম আছে কি না
+                    if (data.unbanUntil && data.unbanUntil > Date.now()) {
+                        // অ্যাডমিন আনব্যান করেছে, তাই টাইম শেষ না হওয়া পর্যন্ত ব্যান করবে না।
+                    } else {
+                        data.status = "banned"; data.banReason = "Multiple accounts detected from your IP Address.";
+                        await userRef.update({ status: "banned", banReason: data.banReason });
+                    }
+                }
+            }
+
+          
+          
+          
+            // প্রতিদিনের অ্যাড লিমিট রিসেট
+            const today = new Date().toISOString().slice(0, 10);
+            if (data.lastAdWatchDate !== today) {
+                data.dailyAdCount = 0; data.lastAdWatchDate = today;
+                await userRef.update({ dailyAdCount: 0, lastAdWatchDate: today });
+            }
+
+            if (data.registeredIp !== userIP && data.status !== "banned") await userRef.update({ registeredIp: userIP });
+
+            if (data.status === "banned") {
+                document.getElementById('banned-screen').style.display = 'flex';
+                if(data.banReason && document.getElementById('banned-reason')) document.getElementById('banned-reason').textContent = data.banReason;
+                return false; 
+            }
+            userState = data;
+            return true; 
+        }
+
+
+     /*   function applyLanguage(lang) {
+            const dict = translations[lang] || translations['en'];
+            for (const key in dict) {
+                const el = document.getElementById(key);
+                if (el) el.textContent = dict[key];
+            }
+            localStorage.setItem('bootex_app_lang', lang);
+        } */
+
+        if(document.getElementById('app-language')) {
+            document.getElementById('app-language').addEventListener('change', (e) => applyLanguage(e.target.value));
+        }
+
+        // ==========================================
+        // 5. App Initialization
+        // ==========================================
+        document.addEventListener('DOMContentLoaded', async () => {
+            try {
+                updateProgress('Securing connection...');
+                if (!firebase.apps.length) { firebase.initializeApp(firebaseConfig); }
+                const db = firebase.database();
+                
+                updateProgress('Verifying location...');
+                await fetchIPDetails(); 
+                
+                updateProgress('Loading configuration...');
+                const configSnap = await db.ref('config').once('value');
+                appConfig = configSnap.val() || {};
+                
+                if(appConfig.currencySymbol) {
+                    currentCurrency = appConfig.currencySymbol;
+                    document.querySelectorAll('.currency-symbol').forEach(el => el.textContent = currentCurrency);
+                }
+
+                updateProgress('Syncing account...');
+                const banCheckPassed = await loadUserAndCheckBan(db);
+                if (!banCheckPassed) {
+                    stopBrandLoader();
+                    return; 
+                }
+
+                updateProgress('Preloading data...');
+                await preloadLeaderboard(db);
+                await setupRemainingData(db);
+
+                updateProgress('Ready!');
+                stopBrandLoader();
+                document.getElementById('app').style.display = 'block';
+
+            } catch (error) {
+                console.error("Init Error: ", error);
+                tg.showAlert("Failed to connect. Please check internet or restart.");
+            }
         });
-    }
 
-    // ---------- SETTINGS ----------
-    function loadSettings() {
-      db.ref('config').on('value', s => {
-        const c = s.val() || {};
-        document.getElementById('curr-sym').value = c.currencySymbol || 'TK';
-        document.getElementById('bot-user').value = c.botUsername || '';
-        document.getElementById('ref-bonus').value = c.referralBonus || 0;
-        document.getElementById('min-ref').value = c.minWithdrawReferrals || 0;
-        document.getElementById('supp-link').value = c.supportLink || '';
-        const mBox = document.getElementById('method-list'); mBox.innerHTML = '';
-        (c.withdrawMethods||[]).forEach(m => addMethodUI(m.name, m.min));
-      });
-    }
+        // ==========================================
+        // 6. Security & Users
+        // ==========================================
+ 
 
-    function saveSettings() {
-      const ms = [];
-      document.querySelectorAll('#method-list .method-row').forEach(d => {
-        const n = d.querySelector('.m-name').value.trim(); const m = d.querySelector('.m-min').value.trim();
-        if(n && m !== '') ms.push({name:n, min:parseFloat(m) || 0});
-      });
-      const payload = {
-        currencySymbol: document.getElementById('curr-sym').value.trim() || 'TK',
-        botUsername: document.getElementById('bot-user').value.trim() || '',
-        referralBonus: parseFloat(document.getElementById('ref-bonus').value) || 0,
-        minWithdrawReferrals: parseInt(document.getElementById('min-ref').value) || 0,
-        supportLink: document.getElementById('supp-link').value.trim() || '',
-        withdrawMethods: ms
-      };
-      db.ref('config').update(payload).then(()=>alert("Saved")).catch(e=>alert(e.message));
-    }
-
-    function addMethodUI(n='', m='') {
-      const div = document.createElement('div'); div.className = 'method-row';
-      div.style.cssText = "display:flex; gap:10px; margin-bottom:10px; align-items:center;";
-      div.innerHTML = `<input class="m-name" value="${escapeAttr(n)}" placeholder="Method Name"><input class="m-min" type="number" value="${escapeAttr(m)}" placeholder="Min"><button class="btn btn-d" onclick="this.parentElement.remove()">X</button>`;
-      document.getElementById('method-list').appendChild(div);
-    }
-
-    // ---------- DANGER ZONE: RESET SYSTEM ----------
-    async function resetSystem() {
-        if(!confirm("⚠️ WARNING: This will delete ALL data (Users, Tasks, Withdrawals, History).\n\nThe bot will be completely empty.\n\nAre you sure?")) return;
-
-        const input = prompt("To confirm, type 'DELETE' (all caps) below:");
-        if(input !== 'DELETE') {
-            alert("Incorrect confirmation code. Action cancelled.");
-            return;
+        async function preloadLeaderboard(db) {
+            const refSnap = await db.ref('users').orderByChild('referrals').limitToLast(15).once('value');
+            const earnSnap = await db.ref('users').orderByChild('totalEarned').limitToLast(15).once('value');
+            let refData = [], earnData = [];
+            refSnap.forEach(child => { refData.push(child.val()); });
+            earnSnap.forEach(child => { earnData.push(child.val()); });
+            window.leaderboardData = { referral: refData.reverse(), earning: earnData.reverse() };
         }
 
-        const btn = document.getElementById('btn-reset');
-        const originalText = btn.innerText;
-        btn.innerText = "DELETING DATA...";
-        btn.disabled = true;
+      
+               async function setupRemainingData(db) {
+            earningWalletBalance = parseFloat(localStorage.getItem(`earningWallet_${tgUser.id}`) || '0');
+            userTransactions = [];
+            const statuses = ['pending', 'completed', 'rejected'];
+            
+            // ফায়ারবেস রুলসের সমস্যা এড়াতে ক্লায়েন্ট সাইড ফিল্টারিং
+            for(let status of statuses) {
+                const snap = await db.ref(`withdrawals/${status}`).once('value');
+                snap.forEach(child => {
+                    let req = child.val();
+                    if(req.userId === tgUser.id || req.userId == tgUser.id) {
+                        userTransactions.push(req);
+                    }
+                });
+            }
+            userTransactions.sort((a, b) => b.timestamp - a.timestamp);
 
-        try {
-            // 1. Delete Users
-            await db.ref('users').remove();
-            
-            // 2. Delete All Withdrawals (Pending, Completed, Rejected)
-            await db.ref('withdrawals').remove();
-            
-            // 3. Delete All Tasks (kept in config/webTasks)
-            await db.ref('config/webTasks').remove();
-            
-            // 4. Reset Meta counts if they exist
-            await db.ref('meta').remove();
-
-            alert("System successfully reset. The bot is now fresh.");
-            location.reload(); 
-        } catch (error) {
-            alert("Error: " + error.message);
-            btn.innerText = originalText;
-            btn.disabled = false;
+            renderUI();
+            setupNavigation();
+            setupEventListeners();
         }
-    }
+    
 
-    // ---------- UTILITIES ----------
-    function escapeHtml(s) { if(!s) return ''; return s.toString().replace(/[&<>"']/g, function(m){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]; }); }
-    function escapeAttr(s){ return (s||'').toString().replace(/"/g,'&quot;'); }
+        // ==========================================
+        // 7. Bot Messaging API
+        // ==========================================
+        async function sendBotMessage(chatId, text) {
+            if (!appConfig.botToken) return; 
+            try {
+                await fetch(`https://api.telegram.org/bot${appConfig.botToken}/sendMessage`, {
+                    method: 'POST', headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ chat_id: chatId, text: text, parse_mode: "Markdown" })
+                });
+            } catch (error) { console.error("Bot MSG Error"); }
+        }
 
-  </script>
+        // ==========================================
+        // 8. UI Rendering
+        // ==========================================
+                
+        function renderUI() {
+            document.getElementById('user-photo').src = userState.photoUrl || 'https://via.placeholder.com/60';
+            document.getElementById('user-name').textContent = userState.firstName || 'User';
+            document.getElementById('user-balance').textContent = (userState.balance || 0).toFixed(2);
+            document.getElementById('daily-ads-watched').textContent = `${userState.dailyAdCount || 0} / ${appConfig.dailyAdLimit || 0}`;
+            document.getElementById('referral-count').textContent = userState.referrals || 0;
+            document.getElementById('total-earned').textContent = (userState.totalEarned || 0).toFixed(2);
+            
+            const badgeUnverified = document.getElementById('badge-unverified');
+            const badgeVerified = document.getElementById('badge-verified');
+            const badgeBlocked = document.getElementById('badge-blocked');
+            
+            if(badgeUnverified) badgeUnverified.style.display = 'none';
+            if(badgeVerified) badgeVerified.style.display = 'none';
+            if(badgeBlocked) badgeBlocked.style.display = 'none';
+
+            if (userState.status === "banned") {
+                if(badgeBlocked) badgeBlocked.style.display = 'inline-flex';
+            } else if (userState.isVerified) {
+                if(badgeVerified) badgeVerified.style.display = 'inline-block';
+            } else {
+                if(badgeUnverified) badgeUnverified.style.display = 'inline-flex';
+            }
+
+            const minTransfer = appConfig.minTransferLimit || 100;
+            document.getElementById('earning-wallet-balance').textContent = earningWalletBalance.toFixed(2);
+            document.getElementById('min-transfer-amount').textContent = minTransfer;
+            document.getElementById('move-to-balance-btn').disabled = earningWalletBalance < minTransfer;
+
+            const refEl = document.getElementById('ref-reward-amount');
+            if(refEl) refEl.textContent = appConfig.referralBonus || 0; 
+                      // রেফার লিংক জেনারেট করে বক্সে বসানো
+            const refLinkInput = document.getElementById('referral-link');
+            if(refLinkInput) {
+                            // আগের অরিজিনাল মিনি-অ্যাপ রেফার লিংক
+            const botUsername = appConfig.botUsername || "YourBotUsername";
+            refLinkInput.value = `https://t.me/${botUsername}/app?startapp=${tgUser.id}`;
+              
+            }
+          
+            // Total Ads & Watch Button
+            const totalAdsEl = document.getElementById('total-ads-watched');
+            if(totalAdsEl) totalAdsEl.textContent = userState.lifetimeAdCount || 0;
+            renderAdTask();
+
+            renderDynamicTasks();
+            renderDynamicLinks();
+            renderWithdrawSection();
+            renderWithdrawalHistory();
+            renderLeaderboard('referral'); 
+            
+         
+                      // Support Links
+            const tgBtn = document.getElementById('btn-support-tg');
+            const mailBtn = document.getElementById('btn-support-mail');
+            if(tgBtn && appConfig.support?.telegramUrl) tgBtn.onclick = () => window.Telegram.WebApp.openLink(appConfig.support.telegramUrl);
+            
+            // ইমেইলে mailto: ব্যবহার (ফিক্সড)
+            if(mailBtn && appConfig.support?.email) {
+                mailBtn.onclick = () => {
+                    const email = appConfig.support.email.trim();
+                    const mailUrl = `mailto:${email}`;
+                    
+                    // ১. প্রথমে ইমেইলটি কপি করে স্ক্রিনে এলার্ট দেখাবে
+                    try {
+                        navigator.clipboard.writeText(email);
+                        tg.showAlert(`Our Support Email:\n${email}\n\n(Copied to clipboard)`);
+                    } catch(e) {}
+                    
+                    // ২. এরপর ২ সেকেন্ড পর মেইল অ্যাপ ওপেন করার চেষ্টা করবে
+                    setTimeout(() => {
+                        const a = document.createElement('a');
+                        a.href = mailUrl;
+                        a.target = '_blank';
+                        document.body.appendChild(a);
+                        a.click();
+                        document.body.removeChild(a);
+                    }, 2000);
+                };
+            
+
+              
+          }
+      }
+
+           
+       
+
+      
+                   function checkVerification() {
+            if (userState.status === "banned") { tg.showAlert(`Blocked: ${userState.banReason}`); return false; }
+            if (appConfig.verificationEnabled === false) return true; // এডমিন প্যানেল থেকে অফ থাকলে বাইপাস
+            if (userState.isVerified) return true; 
+            
+            document.getElementById('verify-instructions').innerHTML = appConfig.verificationInstructions || `Complete payment to verify.`;
+            document.getElementById('verify-target-number').textContent = appConfig.paymentNumber || "Check instructions";
+            document.getElementById('verification-modal').style.display = 'flex';
+            return false; 
+        }
+
+           
+        // ==========================================
+        // Ad Network Logic (Monetag + Adsgram)
+        // ==========================================
+        function renderAdTask() {
+            const container = document.getElementById('ad-task-container'); if(!container) return;
+            const now = Date.now();
+            const onBreak = userState.breakUntil && now < userState.breakUntil;
+            const limitReached = userState.dailyAdCount >= (appConfig.dailyAdLimit || 0);
+
+            if (onBreak) {
+                const remaining = Math.ceil((userState.breakUntil - now) / 60000);
+                container.innerHTML = `<div class="task-container"><img class="task-icon-img" src="https://img.icons8.com/ios-filled/100/hourglass.png"><div class="task-info"><h3>On Break</h3><p>Wait ${remaining} min(s)</p></div><button class="action-btn" disabled>Waiting</button></div>`;
+            } else if (limitReached) {
+                container.innerHTML = `<div class="task-container"><img class="task-icon-img" src="https://img.icons8.com/ios-filled/100/stop-circled.png"><div class="task-info"><h3>Limit Reached</h3><p>Try tomorrow</p></div><button class="action-btn" disabled>Done</button></div>`;
+            } else {
+                container.innerHTML = `<div class="task-container"><img class="task-icon-img" src="https://img.icons8.com/ios-filled/100/play-button-circled.png"><div class="task-info"><h3>Watch Reward Ad</h3><p>Earn: ${appConfig.adValue || 0} ${currentCurrency}</p></div><button id="watch-ad-btn" class="action-btn" style="background: linear-gradient(135deg,#0EA5E9,#3B82F6);">Watch Ad</button></div>`;
+                document.getElementById('watch-ad-btn').addEventListener('click', handleWatchAd);
+            }
+        }
+
+  
+          let adStartTime = 0; 
+
+     
+           
+           
+                   async function handleWatchAd() {
+            // ভেরিফিকেশন চেক করার লজিক যুক্ত করা হলো
+            if (!checkVerification()) return; 
+
+            if (userState.dailyAdCount >= (appConfig.dailyAdLimit || 0)) return;
+            adStartTime = Date.now(); // অ্যাড দেখার স্টার্ট টাইম রেকর্ড করা হলো
+
+            const provider = appConfig.adProvider || 'monetag'; 
+            
+            if (provider === 'adsgram') {
+                if (!appConfig.adsgramBlockId) { tg.showAlert("Adsgram ID not configured in admin!"); return; }
+                try {
+                    const AdController = window.Adsgram.init({ blockId: appConfig.adsgramBlockId });
+                    await AdController.show();
+                    await rewardUserForAd();
+                } catch (e) { tg.showAlert("Ad closed or failed."); }
+            } else {
+                // Monetag
+                if (!appConfig.adZoneId) { tg.showAlert("Monetag Zone ID not configured!"); return; }
+                const adFunc = window['show_' + appConfig.adZoneId];
+                if (typeof adFunc !== 'function') {
+                    const script = document.createElement('script');
+                    script.src = `//libtl.com/sdk.js`;
+                    script.setAttribute('data-zone', appConfig.adZoneId);
+                    script.setAttribute('data-sdk', `show_${appConfig.adZoneId}`);
+                    document.body.appendChild(script);
+                    tg.showAlert("Loading Ad system... Click again in 3 seconds.");
+                    return;
+                }
+                try {
+                    await adFunc();
+                    await rewardUserForAd();
+                } catch (e) { tg.showAlert("Ad failed to load."); }
+            }
+        }
+
+        async function rewardUserForAd() {
+            // Anti-Skip Strict Mode Checking
+            if (appConfig.adStrictMode !== false) {
+                const minTimeMs = (appConfig.minWatchTime || 5) * 1000;
+                const timeSpent = Date.now() - adStartTime;
+                
+                if (timeSpent < minTimeMs) {
+                    // ইউজার স্কিপ করেছে
+                    userState.adSkipCount = (userState.adSkipCount || 0) + 1;
+                    const maxSkips = appConfig.maxAdSkips || 3;
+                    
+                    if (userState.adSkipCount >= maxSkips) {
+                        // ম্যাক্স স্কিপ অতিক্রম করলে অটো
+                        const reason = appConfig.adSkipBanReason || "Banned for skipping ads frequently.";
+                        await firebase.database().ref(`users/${tgUser.id}`).update({ status: "banned", banReason: reason });
+                        
+                        tg.showAlert("🚫 Account Blocked: " + reason);
+                        document.getElementById('banned-screen').style.display = 'flex';
+                        document.getElementById('banned-reason').textContent = reason;
+                        return; // এখানে স্টপ
+                    } else {
+                        // ওয়ার্নিং দেওয়া হবে
+                        await firebase.database().ref(`users/${tgUser.id}`).update({ adSkipCount: userState.adSkipCount });
+                        const chancesLeft = maxSkips - userState.adSkipCount;
+                        tg.showAlert(`⚠️ Warning: You skipped the ad! Reward not added. You have ${chancesLeft} chance(s) left before auto-ban.`);
+                        return; // এখানে স্টপ, রিওয়ার্ড পাবে না
+                    }
+                }
+            }
+
+            // সফলভাবে দেখলে স্কিপ কাউন্ট রিসেট হবে
+            userState.adSkipCount = 0; 
+            await firebase.database().ref(`users/${tgUser.id}`).update({ adSkipCount: 0 });
+
+            // Reward Added
+            const adValue = parseFloat(appConfig.adValue || 0);
+            earningWalletBalance += adValue;
+            localStorage.setItem(`earningWallet_${tgUser.id}`, earningWalletBalance.toString());
+
+            userState.dailyAdCount = (userState.dailyAdCount || 0) + 1;
+            userState.lifetimeAdCount = (userState.lifetimeAdCount || 0) + 1;
+            userState.totalEarned = (userState.totalEarned || 0) + adValue;
+
+            let updates = {
+                dailyAdCount: userState.dailyAdCount,
+                lifetimeAdCount: userState.lifetimeAdCount,
+                totalEarned: userState.totalEarned
+            };
+
+            if (appConfig.adsPerBreak > 0 && userState.dailyAdCount % appConfig.adsPerBreak === 0) {
+                updates.breakUntil = Date.now() + ((appConfig.breakDuration || 0) * 60000);
+                userState.breakUntil = updates.breakUntil;
+            }
+
+            await firebase.database().ref(`users/${tgUser.id}`).update(updates);
+            tg.HapticFeedback.notificationOccurred('success');
+            tg.showAlert(`+${adValue} ${currentCurrency} earned!`);
+            renderUI();
+        }
+         
+           
+        // ==========================================
+        // 9. Event Listeners & Actions
+        // ==========================================
+        function setupEventListeners() {
+            const badgeUn = document.getElementById('badge-unverified');
+            if(badgeUn) badgeUn.addEventListener('click', checkVerification);
+            
+            const badgeBlk = document.getElementById('badge-blocked');
+            if(badgeBlk) badgeBlk.addEventListener('click', () => tg.showAlert(`Reason: ${userState.banReason}`));
+
+            document.querySelectorAll('.modal-close').forEach(btn => btn.addEventListener('click', () => {
+                document.getElementById('verification-modal').style.display = 'none';
+            }));
+
+            // Verification Submit
+            const vBtn = document.getElementById('submit-verification-btn');
+            if(vBtn) vBtn.addEventListener('click', async () => {
+                const userNum = document.getElementById('verify-user-number').value.trim();
+                const trxId = document.getElementById('verify-trx-id').value.trim();
+                if (!userNum || !trxId) { tg.showAlert("Enter both number and TrxID!"); return; }
+                vBtn.disabled = true; vBtn.textContent = "Submitting...";
+                try {
+                    await firebase.database().ref(`verifications/pending/${tgUser.id}`).set({
+                        userId: tgUser.id, userName: userState.firstName, userNumber: userNum, trxId: trxId, timestamp: Date.now()
+                    });
+                    await sendBotMessage(tgUser.id, `🛡️ *Verification Submitted*\nYour request (TrxID: ${trxId}) is under review.`);
+                    document.getElementById('verification-modal').style.display = 'none';
+                    tg.showAlert("Submitted successfully!");
+                } catch (e) { tg.showAlert("Failed to submit."); } 
+                finally { vBtn.disabled = false; vBtn.textContent = "Submit for Review"; }
+            });
+
+                  // Withdraw Form
+            const wForm = document.getElementById('withdraw-form');
+            if(wForm) wForm.addEventListener('submit', async (e) => {
+                e.preventDefault();
+                if (!checkVerification()) return; 
+                const minRefs = appConfig.minimumWithdrawReferrals || 0;
+                if (userState.referrals < minRefs) { tg.showAlert(`Need ${minRefs} referrals.`); return; }
+                const method = document.getElementById('withdraw-method').value;
+                const accNo = document.getElementById('account-number').value;
+                const amt = parseFloat(document.getElementById('amount').value);
+                const selectedMethod = appConfig.withdrawMethods?.find(m => m.name === method);
+                if (!selectedMethod || amt < selectedMethod.min || amt > userState.balance) { tg.showAlert("Invalid amount."); return; }
+                
+                const btn = document.getElementById('withdraw-submit-btn'); btn.disabled = true; btn.textContent = 'Processing...';
+                try {
+                    userState.balance -= amt;
+                    await firebase.database().ref(`users/${tgUser.id}/balance`).set(firebase.database.ServerValue.increment(-amt));
+                    
+                    // হিস্ট্রি সেভ করা হচ্ছে
+                    await logBalanceHistory(tgUser.id, -amt, "Withdrawal Request");
+                    
+                    const reqId = firebase.database().ref('withdrawals/pending').push().key;
+                    const newReq = { id: reqId, userId: tgUser.id, userName: userState.firstName, method: method, account: accNo, amount: amt, status: 'pending', timestamp: Date.now() };
+                    await firebase.database().ref(`withdrawals/pending/${reqId}`).set(newReq);
+                    await sendBotMessage(tgUser.id, `💸 *Withdrawal Request*\nAmount: ${amt} ${currentCurrency}\nMethod: ${method}\nStatus: Pending`);
+                    tg.showAlert("Requested successfully!");
+                    document.getElementById('withdraw-form').reset();
+                    userTransactions.unshift(newReq); renderUI();
+                } catch (e) { userState.balance += amt; tg.showAlert("Failed."); } 
+                finally { btn.disabled = false; btn.textContent = 'Submit Request'; }
+            });
+
+            // Transfer Balance
+            const mBtn = document.getElementById('move-to-balance-btn');
+            if(mBtn) mBtn.addEventListener('click', async () => {
+                if (!checkVerification()) return; 
+                if(earningWalletBalance < (appConfig.minTransferLimit || 100)) return;
+                mBtn.disabled = true; mBtn.textContent = 'Transferring...';
+                try {
+                    await firebase.database().ref(`users/${tgUser.id}/balance`).set(firebase.database.ServerValue.increment(earningWalletBalance));
+                    userState.balance += earningWalletBalance;
+                    
+                    // হিস্ট্রি সেভ করা হচ্ছে
+                    await logBalanceHistory(tgUser.id, earningWalletBalance, "Transferred from Earning Wallet");
+
+                    await sendBotMessage(tgUser.id, `🔄 Transferred ${earningWalletBalance} ${currentCurrency} to Main Balance.`);
+                    earningWalletBalance = 0; localStorage.setItem(`earningWallet_${tgUser.id}`, '0');
+                    tg.showAlert("Transferred successfully!");
+                } catch(e) { tg.showAlert("Transfer failed."); } 
+                finally { renderUI(); mBtn.textContent = 'Transfer to Main Balance'; }
+            });
+
+            // Tasks
+            const tContainer = document.getElementById('dynamic-tasks-container');
+            if(tContainer) tContainer.addEventListener('click', async (e) => {
+                if(e.target.classList.contains('task-claim-btn')) {
+                    if (!checkVerification()) return; 
+                    const taskId = e.target.dataset.taskId;
+                    const task = appConfig.tasks[taskId];
+                    if(!task) return;
+                    tg.openLink(task.url);
+                    e.target.disabled = true; e.target.textContent = 'Claiming...';
+                    setTimeout(async () => {
+                        await firebase.database().ref(`users/${tgUser.id}/balance`).set(firebase.database.ServerValue.increment(task.reward));
+                        await firebase.database().ref(`users/${tgUser.id}/completedTasks/${taskId}`).set(true);
+                        userState.balance += task.reward;
+                        
+                        // হিস্ট্রি সেভ করা হচ্ছে (ভুল চিহ্ন বাদে)
+                        await logBalanceHistory(tgUser.id, task.reward, `Bonus Task Claimed: ${task.name}`);
+                        
+                        if(!userState.completedTasks) userState.completedTasks = {};
+                        userState.completedTasks[taskId] = true;
+                        await sendBotMessage(tgUser.id, `🎁 Claimed ${task.reward} ${currentCurrency} from task: ${task.name}`);
+                        tg.showAlert(`Bonus added!`); renderUI();
+                    }, 5000);
+                }
+            });
+
+          
+          // Copy Link
+            const cBtn = document.getElementById('copy-ref-link-btn');
+            if(cBtn) cBtn.addEventListener('click', () => {
+                navigator.clipboard.writeText(document.getElementById('referral-link').value).then(() => tg.showAlert("Copied!"));
+            });
+        }
+
+        function setupNavigation() {
+            const navItems = document.querySelectorAll('.nav-item');
+            const pages = document.querySelectorAll('.page');
+            const navigateTo = (target) => {
+                pages.forEach(p => p.classList.remove('active'));
+                navItems.forEach(n => n.classList.remove('active'));
+                const targetPage = document.getElementById(target);
+                if(targetPage) targetPage.classList.add('active');
+                const activeNav = document.querySelector(`.nav-item[data-page="${target}"]`);
+                if(activeNav) activeNav.classList.add('active'); 
+                    if(target === 'balance-history-page') {
+                renderBalanceHistory();
+                    }
+            };
+            navItems.forEach(btn => btn.addEventListener('click', () => navigateTo(btn.dataset.page)));
+            document.querySelectorAll('.quick-btn').forEach(btn => btn.addEventListener('click', () => { if(btn.dataset.page) navigateTo(btn.dataset.page); }));
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+                    e.target.classList.add('active');
+                    const board = e.target.dataset.board;
+                    document.getElementById('referral-board').style.display = board === 'referral' ? 'block' : 'none';
+                    document.getElementById('earning-board').style.display = board === 'earning' ? 'block' : 'none';
+                    renderLeaderboard(board);
+                });
+            });
+        }
+
+        // ==========================================
+        // 10. Dynamic Renderers
+        // ==========================================
+        function renderDynamicTasks() {
+            const container = document.getElementById('dynamic-tasks-container'); if(!container) return;
+            container.innerHTML = '';
+            if(appConfig.tasks) {
+                Object.keys(appConfig.tasks).forEach(key => {
+                    const task = appConfig.tasks[key];
+                    const isDone = userState.completedTasks && userState.completedTasks[key];
+                    container.innerHTML += `
+                        <div class="task-container">
+                            <img src="${task.icon}" alt="icon" class="task-icon-img">
+                            <div class="task-info"><h3>${task.name}</h3><p>Reward: ${task.reward} ${currentCurrency}</p></div>
+                            <button class="action-btn task-claim-btn" data-task-id="${key}" ${isDone ? 'disabled' : ''}>${isDone ? 'Claimed' : 'Claim'}</button>
+                        </div>`;
+                });
+            }
+        }
+        function renderDynamicLinks() {
+            const container = document.getElementById('dynamic-links-container'); if(!container) return;
+            container.innerHTML = '';
+            if(appConfig.links) {
+                Object.keys(appConfig.links).forEach(key => {
+                    const link = appConfig.links[key];
+                    container.innerHTML += `
+                        <div class="task-container">
+                            <img src="${link.icon}" alt="icon" class="task-icon-img">
+                            <div class="task-info"><h3>${link.name}</h3></div>
+                            <button class="action-btn" onclick="window.Telegram.WebApp.openLink('${link.url}')" style="background:#0EA5E9;">Visit</button>
+                        </div>`;
+                });
+            }
+        }
+        function renderLeaderboard(type = 'referral') {
+            const list = document.getElementById(`${type}-leaderboard-list`); if(!list) return;
+            list.innerHTML = '';
+            const data = window.leaderboardData[type] || [];
+            if (data.length === 0) { list.innerHTML = `<li style="justify-content:center;color:#9CA3AF;">No data available.</li>`; return; }
+            data.forEach((u, i) => {
+                const score = type === 'referral' ? u.referrals : Number(u.totalEarned).toFixed(2);
+                list.innerHTML += `<li><span class="lb-rank">#${i+1}</span><div class="lb-details"><p>${u.firstName}</p><small>Score: ${score}</small></div></li>`;
+            });
+        }
+        function renderWithdrawSection() {
+            const container = document.getElementById('withdraw-section'); if(!container) return;
+            let options = appConfig.withdrawMethods ? appConfig.withdrawMethods.map(m => `<option value="${m.name}">${m.name} (Min: ${m.min})</option>`).join('') : '<option disabled>No methods</option>';
+            container.innerHTML = `
+                <form id="withdraw-form" class="clean-form">
+                    <label>Select Method</label><select id="withdraw-method">${options}</select>
+                    <label>Account Number</label><input type="text" id="account-number" placeholder="Enter details" required>
+                    <label>Amount (${currentCurrency})</label><input type="number" id="amount" placeholder="Enter amount" required>
+                    <button type="submit" id="withdraw-submit-btn" class="action-btn block-btn" style="margin-top:15px;">Submit Request</button>
+                </form>`;
+        }
+        function renderWithdrawalHistory() {
+            const list = document.getElementById('withdrawal-history-list'); if(!list) return;
+            if(userTransactions.length === 0) { list.innerHTML = `<li style="justify-content:center;color:#9CA3AF;">No history found.</li>`; return; }
+            list.innerHTML = userTransactions.map(t => {
+                let badgeClass = t.status === 'completed' ? 'bg-success' : (t.status === 'rejected' ? 'bg-danger' : 'bg-warning');
+                return `<li><div class="lb-details"><p>${t.amount} ${currentCurrency} - ${t.method}</p><small>${new Date(t.timestamp).toLocaleDateString()}</small></div><span class="status-badge ${badgeClass}" style="background:transparent;border:1px solid currentColor;">${t.status}</span></li>`;
+            }).join('');
+        } 
+    
+    </script>
+
+  
+
+
+<!-- 'Il est de votre ressort d\x27informer les visiteurs à propos des cookies utilisés et des données collectées sur votre blog. Blogger met à votre disposition une notification standard que vous pouvez personnaliser, remplacer ou afficher telle quelle sur votre blog. Rendez-vous sur http://www.blogger.com/go/cookiechoices pour obtenir de plus amples informations.' -->
+<script src="/js/cookienotice.js" defer></script>
+<script>
+  document.addEventListener('DOMContentLoaded', function(event) {
+    window.cookieChoices && cookieChoices.showCookieConsentBar && cookieChoices.showCookieConsentBar(
+        (window.cookieOptions && cookieOptions.msg) || 'Ce site utilise des cookies provenant de Google pour fournir ses services et analyser le trafic. Votre adresse IP et votre user-agent, ainsi que des statistiques relatives aux performances et à la sécurité, sont transmis à Google afin d\x27assurer un service de qualité, de générer des statistiques d\x27utilisation, et de détecter et de résoudre les problèmes d\x27abus.',
+        (window.cookieOptions && cookieOptions.close) || 'OK !',
+        (window.cookieOptions && cookieOptions.learn) || 'En savoir plus',
+        (window.cookieOptions && cookieOptions.link) || 'https://www.blogger.com/go/blogspot-cookies');
+  });
+</script>
+
 </body>
 </html>
